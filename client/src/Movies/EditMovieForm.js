@@ -4,11 +4,12 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import axios from "axios";
 
 function EditMovieForm(props) {
-  const { movieList, setMovieList } = props;
   const history = useHistory();
   const location = useLocation();
   const params = useParams();
   const [movie, setMovie] = useState(null);
+
+  //params = movie from Movie.js
 
   const initialMovie = {
     id: params.id,
@@ -17,6 +18,7 @@ function EditMovieForm(props) {
     metascore: 0,
     stars: [],
   };
+
   const [update, setUpdate] = useState(initialMovie);
   const fetchMovie = (id) => {
     axios
@@ -40,7 +42,6 @@ function EditMovieForm(props) {
   const changeHandler = (e) => {
     setUpdate({ ...update, [e.target.name]: e.target.value });
   };
-  console.log(update);
 
   const submitMovie = (e) => {
     e.preventDefault();
