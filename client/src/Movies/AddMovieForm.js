@@ -5,7 +5,7 @@ import axios from "axios";
 import { v4 as uuid } from "uuid";
 
 function AddMovieForm(props) {
-  const { movieList, setMovieList } = props;
+  const { setMovieList } = props;
   const history = useHistory();
   const initialForm = {
     id: uuid(),
@@ -26,7 +26,7 @@ function AddMovieForm(props) {
     axios
       .post('http://localhost:5000/api/movies', movie)
       .then(res => {
-          setMovieList([...movieList, res.data])
+          setMovieList(res.data)
           history.push('/')
       })
       .catch((e) => console.log(e));
@@ -69,7 +69,6 @@ function AddMovieForm(props) {
           name="metascore"
           id="metascore"
           value={movie.metascore}
-          placeholder="Score"
         />
       </FormGroup>
 

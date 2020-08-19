@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
-import axios from 'axios';
+import axios from "axios";
 
 import EditMovieForm from "./Movies/EditMovieForm";
 import AddMovieForm from "./Movies/AddMovieForm";
@@ -15,14 +15,14 @@ const App = () => {
   const getMovieList = () => {
     axios
       .get("http://localhost:5000/api/movies")
-      .then(res => setMovieList(res.data))
-      .catch(err => console.log(err.response));
+      .then((res) => setMovieList(res.data))
+      .catch((err) => console.log(err.response));
   };
 
-  const addToSavedList = movie => {
+  const addToSavedList = (movie) => {
     setSavedList([...savedList, movie]);
   };
-getMovieList();
+  getMovieList();
 
   useEffect(() => {
     getMovieList();
@@ -30,7 +30,7 @@ getMovieList();
 
   return (
     <>
-      <SavedList list={savedList} />  
+      <SavedList list={savedList} />
 
       <Route exact path="/">
         <MovieList movies={movieList} />
@@ -39,13 +39,19 @@ getMovieList();
       <Route path="/movies/:id">
         <Movie addToSavedList={addToSavedList} />
       </Route>
-      <div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-      <Route path="/update-movie/:id">
-        <EditMovieForm />
-      </Route>
-      <Route path="/add-movie">
-        <AddMovieForm movieList = {movieList} setMovieList = {setMovieList}/>
-      </Route>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <Route path="/update-movie/:id">
+          <EditMovieForm />
+        </Route>
+        <Route path="/add-movie">
+          <AddMovieForm movieList={movieList} setMovieList={setMovieList} />
+        </Route>
       </div>
     </>
   );
