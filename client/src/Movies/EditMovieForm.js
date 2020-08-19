@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from "react";
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory, useLocation} from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import axios from 'axios'
 
-const initialMovie = {
-    title: '',
-    director: '',
-    metascore: '',
-}
+
+
+
 
 function EditMovieForm(props) {
+
 const {movieList, setMovieList} = props;
+const history = useHistory()
+const location = useLocation()
   const params = useParams();
   const [movie, setMovie] = useState(null);
-  const [update, setUpdate] = useState(initialMovie);
 
+  const initialMovie = {
+    id: params.id,
+    title: '',
+    director: '',
+    metascore: 0,
+    stars: [],
+}
+  const [update, setUpdate] = useState(initialMovie);
   const fetchMovie = (id) => {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
@@ -23,25 +31,30 @@ const {movieList, setMovieList} = props;
   };
 
   useEffect(() => {
-    fetchMovie(params.id);
-  }, [params.id]);
+      if(location.state){
+          setUpdate(location.state)
+      } else{
+        fetchMovie(params.id);
+      }
+    
+  }, [params.id, location.state]);
 
   if (!movie) {
     return <div>Loading movie information...</div>;
   }
 
   const changeHandler = (e) => {
-    setUpdate(([e.target.name] = e.target.value));
+      setUpdate({...update, [e.target.name]: e.target.value})
   };
+console.log(update)
 
   const submitMovie = (e) => {
     e.preventDefault();
+
     axios
-    .put(`http://localhost:5000/api/movies/${movie.id}`, movie)
+    .put(`http://localhost:5000/api/movies/${movie.id}`, update)
     .then(res => {
-        const newMovieArr = props.movieList.filter(movie => movie.id !== params.id);
-        newMovieArr.push(res.data);
-        props.setMovieList(newMovieArr);
+         history.push(`/`)
     })
     .catch(err => console.log(err))
   };
@@ -80,7 +93,7 @@ const {movieList, setMovieList} = props;
         </Label>
         <Input
           onChange={changeHandler}
-          type="text"
+          type="number"
           name="metascore"
           id="metascore"
           value={update.metascore}

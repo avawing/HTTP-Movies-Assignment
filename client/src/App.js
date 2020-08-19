@@ -20,6 +20,7 @@ const App = () => {
   const addToSavedList = movie => {
     setSavedList([...savedList, movie]);
   };
+getMovieList();
 
   useEffect(() => {
     getMovieList();
