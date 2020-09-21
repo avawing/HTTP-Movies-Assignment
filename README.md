@@ -10,14 +10,21 @@
 - In a separate terminal cd into the `client` folder and run `npm install` to download dependencies.
 - Still inside the `client` folder run `npm start` to run the client application.
 
+***DONE**
+
 ### Task 2a: MVP
 
 #### Updating A Movie:
 
 - Add a route at the path `/update-movie/:id`
+*** Done ***
+
 - Create a component with a form to update the chosen movie
+***Done***
 - Add a button in the movie component that routes you to your new route with the movies's id as the URL param
+***Done***
 - The form should make a PUT request to the server when submitted
+***Done***
 - When the call comes back successfully, reset your form state and route the user to `/movies` where they will see the updated movie in the list
 - (Editing the movie stars can be a stretch problem... don't worry about it now. Move on to the next step, and come back and solve this at the end)
 
@@ -32,11 +39,14 @@ Movie object format:
   stars: ['Kurt Russell', 'Bill Paxton', 'Sam Elliot'],
 }
 ```
+***DONE***
 
 #### Deleting A Movie:
 
 - Add a delete button in the movie component that makes a DELETE request
 - When the call comes back successfully, route the user to `/movies` where they will see the updated movie list without the deleted movie
+
+***DONE***
 
 #### Adding A Movie:
 
